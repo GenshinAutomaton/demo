@@ -1,74 +1,19 @@
 import pyautogui
 import time
 from package.chooseBoss import ChenSha
-from package.attack import change_legend
+from package.attack import *
 
 
 def LeiYeBanZhong():
-    pyautogui.click()
-    pyautogui.keyDown('w')
-    time.sleep(17.8)
-    pyautogui.keyUp('w')
-    pyautogui.keyDown('f')
-    pyautogui.keyUp('f')
+    begin_instance()
+    for i in range(0, 10):
+        change_with_EQ('4', 0, 2.5, True)
+        change_with_QEQ('3', 1, 1, False)
+        change_with_QEQ('2', 1, 1.5, False)
+        change_with_EQ('1', 1, 1, False)
 
-    change_legend('4')
-
-    pyautogui.keyDown('e')
-    time.sleep(1.5)
-    pyautogui.keyUp('e')
-
-    pyautogui.keyDown('q')
-    pyautogui.keyUp('q')
-
-    change_legend('3')
-    pyautogui.keyDown('q')
-    pyautogui.keyUp('q')
-
-    time.sleep(1)
-
-    pyautogui.keyDown('e')
-    pyautogui.keyUp('e')
-
-    time.sleep(1)
-
-    pyautogui.keyDown('q')
-    pyautogui.keyUp('q')
-
-    time.sleep(1)
-
-    change_legend('2')
-
-    pyautogui.keyDown('q')
-    pyautogui.keyUp('q')
-
-    time.sleep(1)
-
-    pyautogui.keyDown('e')
-    pyautogui.keyUp('e')
-
-    time.sleep(1)
-
-    pyautogui.keyDown('q')
-    pyautogui.keyUp('q')
-
-    time.sleep(1)
-
-    change_legend('1')
-
-    pyautogui.keyDown('e')
-    pyautogui.keyUp('e')
-
-    time.sleep(1)
-
-    pyautogui.keyDown('q')
-    pyautogui.keyUp('q')
-
-    for i in range(0, 16):
-        pyautogui.keyDown('e')
-        pyautogui.keyUp('e')
-
-        time.sleep(0.5)
+        for i in range(0, 16):
+            A(0.5, False)
 
 
 if __name__ == "__main__":
