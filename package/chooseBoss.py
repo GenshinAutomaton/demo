@@ -3,24 +3,35 @@ import time
 
 
 
-def open_guide_book():
+def open_guide_book(bookLabel: int):
     time.sleep(2)
     pyautogui.keyDown('f1')
     pyautogui.keyUp('f1')
 
     time.sleep(1)
 
-    # 选择秘境 / 每日任务
     x = 400
     y = 575
+
+    # 选择秘境 / 每日任务
+    if bookLabel == 3:
+        x = 400
+        y = 575
+        
     pyautogui.moveTo(x, y)
     pyautogui.click()
 
 
-def choose_instance():
+def choose_instance(insId: int):
     pyautogui.moveTo(2064, 1050)
-    for i in range(1, 100):
-        pyautogui.scroll(-1)
+    if insId <= 4:
+        # 不用滚动
+        ...
+
+    else:
+        roll = 7.7 * （insId - 4） # 待验证
+        for i in range(1, 100):
+            pyautogui.scroll(-1)
 
     pyautogui.click()
     pyautogui.moveTo(2246, 1348)
