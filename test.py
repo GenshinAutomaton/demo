@@ -1,7 +1,10 @@
-import pyautogui
+import pyautogui as pgi
 import time
-from package.chooseInstance import ChenSha, open_guide_book, choose_instance
-from package.attack import *
+from packages.chooseInstance import open_guide_book, choose_instance, begin_instance
+from packages.attack import *
+import torch
+from findIns import find_instance
+from detect import load_model
 
 
 def LeiYeBanZhong():
@@ -17,9 +20,14 @@ def LeiYeBanZhong():
 
 
 if __name__ == "__main__":
-    # time.sleep(2)
-    # print(pyautogui.position())
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    imgsz = 640
+    weightPath = r'./param/instance.pt'  # 权重文件
+    model = load_model(device, weightPath, imgsz)
+    print("Start")
+    time.sleep(2)
+    # print(pgi.position())
     open_guide_book(3)
-    choose_instance(16)
-    ChenSha()
-    LeiYeBanZhong()
+    choose_instance(device, model, imgsz, 10)
+    # LeiYeBanZhong()
+    # find_instance(device, model, imgsz)
