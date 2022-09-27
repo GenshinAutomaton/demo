@@ -20,8 +20,20 @@ def LeiYeBanZhong():
             A(0.5, False)
 
 
+def push(dct):
+    print(json.dumps(dct))
+    sys.stdout.flush()
+
+
+def pull()
+    lines = sys.stdin.readlines()
+    data = json.loads(lines)
+    return data
+
 # json {key=秘境id：value=次数}
 if __name__ == "__main__":
+    isTest = True
+
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     imgsz = 640
     weightPath = r'./param/instance.pt'  # 权重文件
@@ -37,22 +49,20 @@ if __name__ == "__main__":
         # find_instance(device, model, imgsz)
         ...
     else:
-        lines = sys.stdin.readlines()
-        data = json.loads(lines)
+        data = pull()
         for i in range(1, 20):
             curr = str(i)
             if data[curr] != 0:
                 open_guide_book(3)
                 for j in range(0, data[curr]): # curr 是当前秘境，发给前端
-                    print(json.dumps({curr: "doing"}))
-                    sys.stdout.flush()
-                    choose_instance(device, model, imgsz, i)
+                    push({curr: "doing"})
+                    print("dododo")
+                    # choose_instance(device, model, imgsz, i)
                     # LeiYeBanZhong()
                     # 打怪
                     # 领取奖励
                     
-                    print(json.dumps(curr: "done"))
-                    sys.stdout.flush()
+                    push({curr: "done"})
                     if j != data[curr]-1:
                         # 继续秘境
                         ...
