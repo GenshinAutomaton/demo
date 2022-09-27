@@ -78,7 +78,7 @@ def choose_instance(device, model, imgsz, insId: int):
     time.sleep(1)
     pgi.click()
 
-    begin_instance()
+    # begin_instance()
 
 
 def begin_instance():

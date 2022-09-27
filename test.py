@@ -5,6 +5,7 @@ from packages.attack import *
 import torch
 from findIns import find_instance
 from detect import load_model
+import sys, json
 
 
 def LeiYeBanZhong():
@@ -19,6 +20,7 @@ def LeiYeBanZhong():
             A(0.5, False)
 
 
+# json {key=秘境id：value=次数}
 if __name__ == "__main__":
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     imgsz = 640
@@ -26,8 +28,34 @@ if __name__ == "__main__":
     model = load_model(device, weightPath, imgsz)
     print("Start")
     time.sleep(2)
-    # print(pgi.position())
-    open_guide_book(3)
-    choose_instance(device, model, imgsz, 10)
-    # LeiYeBanZhong()
-    # find_instance(device, model, imgsz)
+
+    if isTest == True:
+        # print(pgi.position())
+        open_guide_book(3)
+        choose_instance(device, model, imgsz, 10)
+        # LeiYeBanZhong()
+        # find_instance(device, model, imgsz)
+        ...
+    else:
+        lines = sys.stdin.readlines()
+        data = json.loads(lines)
+        for i in range(1, 20):
+            curr = str(i)
+            if data[curr] != 0:
+                open_guide_book(3)
+                for j in range(0, data[curr]): # curr 是当前秘境，发给前端
+                    print(json.dumps({curr: "doing"}))
+                    sys.stdout.flush()
+                    choose_instance(device, model, imgsz, i)
+                    # LeiYeBanZhong()
+                    # 打怪
+                    # 领取奖励
+                    
+                    print(json.dumps(curr: "done"))
+                    sys.stdout.flush()
+                    if j != data[curr]-1:
+                        # 继续秘境
+                        ...
+                    else:
+                        # 退出秘境
+                        ...

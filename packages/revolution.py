@@ -18,4 +18,5 @@ def get_correct_Pos(x, y):
     返回值是 int 类型。
     '''
     probx, proby = get_Prob_with_2K()
+    # print(probx, proby)
     return int(x * probx), int(y * proby)
