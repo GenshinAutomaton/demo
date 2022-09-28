@@ -6,7 +6,6 @@ from utils.general import non_max_suppression
 
 
 def load_model(device, weights, imgsz):
-    print("loading models...")
     model = attempt_load(weights, map_location=device)
     if device == 'cuda':
         model.half()

@@ -48,9 +48,9 @@ def choose_instance(device, model, imgsz, insId: int):
     pgi.click()
     x, y = get_correct_Pos(2246, 1348)
     pgi.moveTo(x, y)
-    time.sleep(1)
+    time.sleep(2)
     pgi.click()
-    time.sleep(5)
+    time.sleep(10)
 
     x, y = pgi.position()
     flag = 0
@@ -58,8 +58,10 @@ def choose_instance(device, model, imgsz, insId: int):
         if flag == 3:
             break
         if find_instance(device, model, imgsz) == True:
-            time.sleep(0.5)
             flag += 1
+        else:
+            flag = 0
+        time.sleep(0.5)
 
     pgi.keyDown('w')
     time.sleep(5)
@@ -78,14 +80,24 @@ def choose_instance(device, model, imgsz, insId: int):
     time.sleep(1)
     pgi.click()
 
-    # begin_instance()
 
-
-def begin_instance():
-    time.sleep(5)
+def begin_instance(insId: int):
+    time.sleep(10)
     pgi.click()
+
     pgi.keyDown('w')
-    time.sleep(17.8)
+    if insId in [2, 3, 8, 9, 12, 13, 16]:
+        time.sleep(17.6)
+    elif insId in [1, 4, 5, 7, 11]:
+        time.sleep(10)
+    elif insId in [10, 14, 15]:
+        time.sleep(14.8)
+    elif insId == 17:
+        time.sleep(16.5)
+    elif insId == 6:
+        time.sleep(8.5)
+    elif insId == 19:
+        time.sleep(17)
     pgi.keyUp('w')
-    pgi.keyDown('f')
-    pgi.keyUp('f')
+    # pgi.keyDown('f')
+    # pgi.keyUp('f')
