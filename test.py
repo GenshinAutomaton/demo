@@ -28,7 +28,14 @@ def getArgs():
     args = parser.parse_args()
     return args
 
+
+def push(username, msg):
+    name = "MiJing:" + username
+    r.set(name, msg, ex=300)
+
+
 '''
+receive
 {
     \"ins\": {\"1\": \"2\", \"2\": \"3\"},
     \"user\": \"Owenovo\",
@@ -37,6 +44,7 @@ def getArgs():
 '''
 
 '''
+send
 {
     \"cur\": \"1\",
     \"fin\": {\"1\": \"2\", \"2\": \"3\"}
@@ -85,7 +93,7 @@ if __name__ == "__main__":
             choose_instance(device, model, imgsz, i)
             for j in range(0, num): # curr 是当前秘境，发给前端
                 msg["cur"] = curr
-                # push(username, msg)
+                push(username, msg)
                 print("curr: %s, number: %d" % (curr, j))
                 begin_instance()
                 # LeiYeBanZhong()
@@ -95,7 +103,7 @@ if __name__ == "__main__":
                 fin[curr] += 1
                 msg["cur"] = 0
                 msg["fin"] = fin
-                # push(username, msg)
+                push(username, msg)
                 if j != num-1:
                     # 继续秘境
                     ...
