@@ -68,7 +68,7 @@ if __name__ == "__main__":
     r = redis.Redis(host='r-bp18tyvha4i273d7x4pd.redis.rds.aliyuncs.com', port=6379, password=pwd)  
 
     print("loading models...")
-    model = load_model(device, weightPath, imgsz)
+    # model = load_model(device, weightPath, imgsz)
     print("Start")
     time.sleep(2)
 
@@ -89,13 +89,13 @@ if __name__ == "__main__":
             if (curr not in ins.keys()):
                 continue
             num = int(ins[curr])
-            open_guide_book(3)
-            choose_instance(device, model, imgsz, i)
+            # open_guide_book(3)
+            # choose_instance(device, model, imgsz, i)
             for j in range(0, num): # curr 是当前秘境，发给前端
                 msg["cur"] = curr
                 push(username, msg)
                 print("curr: %s, number: %d" % (curr, j))
-                begin_instance()
+                # begin_instance()
                 # LeiYeBanZhong()
                 # 打怪
                 # 领取奖励
