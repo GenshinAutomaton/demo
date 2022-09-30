@@ -31,6 +31,7 @@ def open_guide_book(bookLabel: int):
 
 
 def choose_instance(device, model, imgsz, insId: int):
+    insId += 1
     if insId <= 4:
         # 不用滚动
         x = 2064
@@ -82,6 +83,7 @@ def choose_instance(device, model, imgsz, insId: int):
 
 
 def begin_instance(insId: int):
+    insId += 1
     time.sleep(10)
     pgi.click()
 

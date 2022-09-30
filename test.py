@@ -77,18 +77,17 @@ if __name__ == "__main__":
     time.sleep(2)
 
     if isTest == True:
-        r.set(username, '3', ex=300)
-
         # print(pgi.position())
         # open_guide_book(3)
         # choose_instance(device, model, imgsz, 10)
         # LeiYeBanZhong()
         # find_instance(device, model, imgsz)
+        ...
     else:
         msg = {}
         fin = {}
         ins = data['ins']
-        for i in range(1, 20):
+        for i in range(0, 19):
             curr = str(i)
             if (curr not in ins.keys()):
                 continue
@@ -108,7 +107,7 @@ if __name__ == "__main__":
                     fin[curr] = 1
                 else:
                     fin[curr] += 1
-                msg["cur"] = 0
+                del msg["cur"]
                 msg["fin"] = fin
 
                 push(username, str(msg), 300)
