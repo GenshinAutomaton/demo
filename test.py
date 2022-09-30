@@ -5,9 +5,7 @@ from packages.attack import *
 import torch
 from findIns import find_instance
 from detect import load_model
-import sys, json
-import argparse
-import redis
+import json, argparse, redis, atexit
 
 
 def LeiYeBanZhong():
@@ -29,9 +27,9 @@ def getArgs():
     return args
 
 
-def push(username, msg):
+def push(username, msg, ex:int):
     name = "MiJing:" + username
-    r.set(name, msg, ex=300)
+    r.set(name, msg, ex=ex)
 
 
 '''
@@ -41,6 +39,9 @@ receive
     \"user\": \"Owenovo\",
     \"pwd\": \"Lmq1226lmq\"
 }
+
+--json '{\"ins\": {\"1\": \"2\", \"2\": \"3\"},\"user\": \"Owenovo\",\"pwd\": \"Lmq1226lmq\"}'
+python test.py --json '{\"ins\": {\"1\": \"2\", \"2\": \"3\"},\"user\": \"Owenovo\",\"pwd\": \"Lmq1226lmq\"}'
 '''
 
 '''
@@ -50,13 +51,12 @@ send
     \"fin\": {\"1\": \"2\", \"2\": \"3\"}
 }
 '''
+def clean(username):
+    push(username + ":isFinish", "True", 120)
+
 
 if __name__ == "__main__":
-    isTest = True
-
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-    imgsz = 640
-    weightPath = r'./param/instance.pt'  # 权重文件
+    isTest = False
 
     args = getArgs()
     data = args.json
@@ -65,10 +65,14 @@ if __name__ == "__main__":
     print("linking to redis...")
     username = data['user']
     pwd = data['pwd']
-    r = redis.Redis(host='r-bp18tyvha4i273d7x4pd.redis.rds.aliyuncs.com', port=6379, password=pwd)  
+    r = redis.Redis(host='r-bp18tyvha4i273d7x4pd.redis.rds.aliyuncs.com', port=6379, password=pwd)
+    atexit.register(clean, username)
 
     print("loading models...")
-    # model = load_model(device, weightPath, imgsz)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    imgsz = 640
+    weightPath = r'./param/instance.pt'  # 权重文件
+    model = load_model(device, weightPath, imgsz)
     print("Start")
     time.sleep(2)
 
@@ -93,17 +97,21 @@ if __name__ == "__main__":
             # choose_instance(device, model, imgsz, i)
             for j in range(0, num): # curr 是当前秘境，发给前端
                 msg["cur"] = curr
-                push(username, msg)
+                push(username, str(msg), 300)
                 print("curr: %s, number: %d" % (curr, j))
                 # begin_instance()
                 # LeiYeBanZhong()
                 # 打怪
                 # 领取奖励
                 
-                fin[curr] += 1
+                if curr not in fin.keys():
+                    fin[curr] = 1
+                else:
+                    fin[curr] += 1
                 msg["cur"] = 0
                 msg["fin"] = fin
-                push(username, msg)
+
+                push(username, str(msg), 300)
                 if j != num-1:
                     # 继续秘境
                     ...
