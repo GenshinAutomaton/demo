@@ -55,6 +55,7 @@ send
 '''
 def clean(username):
     push("finish:" + username, "True", 120)
+    push(username, "True", 1)
 
 
 if __name__ == "__main__":
@@ -98,7 +99,7 @@ if __name__ == "__main__":
             # choose_instance(device, model, imgsz, i)
             for j in range(0, num): # curr 是当前秘境，发给前端
                 msg["cur"] = curr
-                push(username, str(msg), 300)
+                push(username, str(msg), 3000)
                 print("curr: %s, number: %d" % (curr, j))
                 # begin_instance()
                 # LeiYeBanZhong()
@@ -112,7 +113,7 @@ if __name__ == "__main__":
                 del msg["cur"]
                 msg["fin"] = fin
 
-                push(username, str(msg), 300)
+                push(username, str(msg), 3000)
                 if j != num-1:
                     # 继续秘境
                     ...
