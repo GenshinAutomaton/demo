@@ -29,6 +29,7 @@ def getArgs():
 
 def push(username, msg, ex:int):
     name = "MiJing:" + username
+    msg = msg.replace("'", '"')
     r.set(name, msg, ex=ex)
 
 
@@ -42,6 +43,7 @@ receive
 
 --json '{\"ins\": {\"1\": \"2\", \"2\": \"3\"},\"user\": \"Owenovo\",\"pwd\": \"Lmq1226lmq\"}'
 python test.py --json '{\"ins\": {\"1\": \"2\", \"2\": \"3\"},\"user\": \"Owenovo\",\"pwd\": \"Lmq1226lmq\"}'
+python test.py --json '{\"ins\": {\"1\": \"2\", \"2\": \"3\"},\"user\": \"lmq122677@qq.com\",\"pwd\": \"Lmq1226lmq\"}'
 '''
 
 '''
@@ -52,7 +54,7 @@ send
 }
 '''
 def clean(username):
-    push(username + ":isFinish", "True", 120)
+    push("finish:" + username, "True", 120)
 
 
 if __name__ == "__main__":
@@ -69,8 +71,8 @@ if __name__ == "__main__":
     atexit.register(clean, username)
 
     print("loading models...")
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     imgsz = 640
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     weightPath = r'./param/instance.pt'  # 权重文件
     model = load_model(device, weightPath, imgsz)
     print("Start")
@@ -86,7 +88,7 @@ if __name__ == "__main__":
     else:
         msg = {}
         fin = {}
-        ins = data['ins']
+        ins = data["ins"]
         for i in range(0, 19):
             curr = str(i)
             if (curr not in ins.keys()):
